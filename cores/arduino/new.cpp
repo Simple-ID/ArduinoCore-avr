@@ -57,6 +57,7 @@ void * operator new[](std::size_t size) {
 }
 
 void * operator new(std::size_t size, const std::nothrow_t tag) noexcept {
+(void)tag;
 #if defined(NEW_TERMINATES_ON_FAILURE)
   // Cannot call throwing operator new as standard suggests, so call
   // new_helper directly then
@@ -66,6 +67,7 @@ void * operator new(std::size_t size, const std::nothrow_t tag) noexcept {
 #endif
 }
 void * operator new[](std::size_t size, const std::nothrow_t& tag) noexcept {
+(void)tag;
 #if defined(NEW_TERMINATES_ON_FAILURE)
   // Cannot call throwing operator new[] as standard suggests, so call
   // malloc directly then
@@ -93,17 +95,21 @@ void operator delete[](void * ptr) noexcept {
 
 #if __cplusplus >= 201402L
 void operator delete(void* ptr, std::size_t size) noexcept {
+(void)size;
   operator delete(ptr);
 }
 void operator delete[](void * ptr, std::size_t size) noexcept {
+(void)size;
   operator delete[](ptr);
 }
 #endif // __cplusplus >= 201402L
 
 void operator delete(void* ptr, const std::nothrow_t& tag) noexcept {
+	(void) tag;
   operator delete(ptr);
 }
 void operator delete[](void* ptr, const std::nothrow_t& tag) noexcept {
+	(void)tag;
   operator delete[](ptr);
 }
 
