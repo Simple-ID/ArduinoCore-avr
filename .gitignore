@@ -1,0 +1,3 @@
+build/
+local_config/*
+!local_config/*.template
